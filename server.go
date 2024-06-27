@@ -12,6 +12,8 @@ import (
 	"os/signal"
 	"sync"
 	"time"
+
+	"server/pkg/router"
 )
 
 type Config struct {
@@ -19,44 +21,11 @@ type Config struct {
 	port string
 }
 
-func addRoutes(
-	mux *http.ServeMux,
-) {
-	mux.Handle("/api/v1", http.NotFoundHandler())
-	mux.HandleFunc("/", handleHTML)
-}
-
-func loadHTML(filePath string) []byte {
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		log.Panicf("failed reading data from file: %s", err)
-	}
-	return data
-}
-
-func handleHTML(
-	// logger
-	w http.ResponseWriter,
-	r *http.Request,
-) {
-	var data []byte
-	switch r.URL.Path {
-	case "/":
-		data = loadHTML("../app/index.html")
-	case "/about":
-		data = loadHTML("../app/about/index.html")
-	default:
-		data = loadHTML("../app/http_error/404.html")
-	}
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(data))
-}
-
 func NewServer(
 	config Config,
 ) http.Handler {
 	mux := http.NewServeMux()
-	addRoutes(mux)
+	router.AddRoutes(mux)
 	var handler http.Handler = mux
 	// Add middleware as follows
 	// handler = someMiddleware(handler)
