@@ -9,7 +9,6 @@ import (
 func AddRoutes(
 	mux *http.ServeMux,
 ) {
-	mux.Handle("/api/v1", http.NotFoundHandler())
 	mux.HandleFunc("/", handleHTML)
 }
 
@@ -28,10 +27,10 @@ func handleHTML(
 ) {
 	var data []byte
 	switch r.URL.Path {
+	// case "<URL/ROUTE>":
+	// 	data = loadHTML("../app/<FilePath>")
 	case "/":
 		data = loadHTML("../app/index.html")
-	case "/about":
-		data = loadHTML("../app/about/index.html")
 	default:
 		data = loadHTML("../app/http_error/404.html")
 	}
