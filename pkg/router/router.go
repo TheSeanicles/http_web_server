@@ -15,7 +15,7 @@ func AddRoutes(
 ) {
 	workDir, _ = os.Getwd()
 	mux.HandleFunc("/", handleHTML)
-	mux.HandleFunc("/api/v1/stats", handleServerStats)
+	// mux.HandleFunc("/api/v1/stats", handleServerStats)
 }
 
 func loadHTML(filePath string) []byte {
