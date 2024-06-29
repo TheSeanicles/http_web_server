@@ -58,7 +58,7 @@ func run(
 	go func() {
 		defer wg.Done()
 		<-ctx.Done()
-		shutdownCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+		shutdownCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
 		defer cancel()
 		if err := httpServer.Shutdown(shutdownCtx); err != nil {
 			fmt.Fprintf(os.Stderr, "error shutting down http server: %s\n", err)
